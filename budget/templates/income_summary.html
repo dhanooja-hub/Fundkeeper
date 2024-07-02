@@ -1,0 +1,49 @@
+{%extends 'base.html'%}
+{%block main_block%}
+<div class="container">
+    <div class="card mt-5 ">
+        <div class="card-header"><h3>Income Summary:{{income_total.total}}</h3></div>
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <h3>income pie chart</h3>
+                <canvas id="myChart"></canvas>
+
+            </div>
+            <div class="col-6"></div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script_block%}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: [{%for cs in category_total%} "{{cs.category}}", {%endfor%}],
+      datasets: [{
+        label: '# of Votes',
+        data: [{%for cs in category_total%} "{{cs.total}}", {%endfor%}],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+ 
+ 
+{%endblock%}
